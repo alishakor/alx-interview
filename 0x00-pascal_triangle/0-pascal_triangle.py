@@ -11,17 +11,17 @@ def pascal_triangle(n):
        n(int) - integer
 
     Returns:
-        list -  empty list if n <= 0
+        list - a list but empty list if n <= 0
     '''
-    pasc_triangle = []
+    triangle = []
     if type(n) is not int or n <= 0:
-        return pasc_triangle
+        return triangle
     for i in range(n):
         line = []
         for j in range(i + 1):
             if j == 0 or j == i:
                 line.append(1)
             elif i > 0 and j > 0:
-                line.append(pasc_triangle[i - 1][j - 1] + pasc_triangle[i - 1][j])
-        pasc_triangle.append(line)
-    return pasc_triangle
+                line.append(triangle[i - 1][j - 1] + triangle[i - 1][j])
+        triangle.append(line)
+    return triangle
