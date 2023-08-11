@@ -4,14 +4,13 @@
 
 
 def minOperations(n):
-    """Computes the fewest number of operations needed to result
+    """
+    Computes the fewest number of operations needed to result
     in exactly n H characters.
-	
-	Args:
-		n(int): number of characters
-
-	Returns:
-		operations(int): number of operations
+    Args:
+        n(int): number of characters
+    Returns:
+        operations(int): number of operations else 0
     """
     if not isinstance(n, int):
         return 0
