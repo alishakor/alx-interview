@@ -19,7 +19,7 @@ reqst.get(`${url}/${movieId}`, (error, response, body) => {
     const charname = reqst.characters;
     for (let i = 0; i < charname.length; i++) {
       const ohk = charname[i];
-      req.get(`${ohk}`, (error, response, body) => {
+      reqst.get(`${ohk}`, (error, response, body) => {
         if (error) {
           console.error(error);
         } else {
