@@ -7,26 +7,38 @@
 // You must use the Star wars API
 // You must use the module request
 
-const reqst = require('request');
+const request = require('request');
 const movieId = process.argv[2];
-const url = 'https://swapi-api.alx-tools.com/api/films';
+const ApiUrl = 'https://swapi-api.alx-tools.com/api';
 
-reqst.get(`${url}/${movieId}`, (error, response, body) => {
-  if (error) {
-    console.error(error);
-  } else {
-    const reqst = JSON.parse(body);
-    const charname = reqst.characters;
-    for (let i = 0; i < charname.length; i++) {
-      const ohk = charname[i];
-      reqst.get(`${ohk}`, (error, response, body) => {
-        if (error) {
-          console.error(error);
-        } else {
-          const newres = JSON.parse(body);
-          console.log(newres.name);
-        }
-      });
-    }
+function getRequest (url) {
+  return new Promise((resolve, reject) => {
+    request.get(url, (error, response, body) => {
+      if (error) {
+        reject(error);
+      } else if (response.statusCode !== 200) {
+        reject(new Error(`Request failed with status code ${response.statusCode}`));
+      } else {
+        resolve(JSON.parse(body));
+      }
+    });
+  });
+}
+
+async function fetchMovieAndCharacters (movieId) {
+  try {
+    const movieData = await getRequest(`${ApiUrl}/films/${movieId}`);
+    const characterPromises = movieData.characters.map(characterUrl =>
+      getRequest(characterUrl).then(characterData => characterData.name)
+    );
+
+    const characterNames = await Promise.all(characterPromises);
+    characterNames.forEach(characterName => {
+      console.log(`${characterName}`);
+    });
+  } catch (error) {
+    console.error(`Error: ${error}`);
   }
-});
+}
+
+fetchMovieAndCharacters(movieId);
