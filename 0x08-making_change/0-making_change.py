@@ -31,4 +31,3 @@ def makeChange(coins: List[int], total: int) -> int:
         return count_coins
     else:
         return -1
-
